@@ -1,31 +1,68 @@
-# plaque-cli
 
-a standard persian car plaque
+# 🇮🇷 Persian License Plate Lookup
+
+A simple Golang application to lookup Iranian car license plates.
+This project provides a clean JSON dataset of Iranian plates (`plates.json`) and exposes it in two ways:
+
+---
+
+1. **REST API** – query plates via HTTP.
+2. **Terminal UI (TUI)** – query plates directly from the command line.
+
+---
+
+## 🚀 Usage (TUI & API)
+---
+
+### 1. Run as API
+Start the HTTP server:
 
 ```
-
-00 - A - 000 - 00
+go run ./cmd/api
+```
+Then query a plate (example):
 
 ```
-we sign to an item a name:
-
+curl http://localhost:4000/p?w=46&y=س
 ```
 
-00 - A - 000 - 00
 
- x - y -  z  - w
-```
-this is a real format of persian car plaque
+Response:
 
 ```
-x=24
-y=س
-z=243
-w=11
+{
+  "province": "گیلان",
+  "city": "رشت"
+}
+```
+---
+
+### 2. Run as Terminal App (TUI)
+```
+go run ./cmd/tui
 ```
 
-for detecting city we need to 2 items
+Example usage inside terminal:
 
-00 (A) 000 (00)
+Enter province code: 11
+Enter letter: ب
+```
+➡ Province: گیلان
+➡ City: رشت
+```
 
-**y** and **w**
+---
+
+📦 Dataset
+	•	plates.json contains the normalized Persian plate data.
+	•	Data is structured for O(1) lookup using nested maps:
+```
+{
+  "11": {
+    "ب": {
+      "province": "گیلان",
+      "city": "رشت"
+    }
+  }
+}
+```
